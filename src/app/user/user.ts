@@ -2,24 +2,19 @@ import { Component, computed, EventEmitter, Input, Output } from '@angular/core'
 import { DUMMY_USERS } from '../dummy-users';
 import { signal } from '@angular/core';
 
-// type UserC = {
-//     id:string;
-//     avatar:string;
-//     name:string;
-//   };
+import { UserC } from './user.model';
+import { Card } from "../shared/card/card";
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [Card],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
 export class User {
-  @Input({required:true}) user!:{
-    id:string;
-    avatar:string;
-    name:string;
-  };
+  @Input({required:true}) user!:UserC;
+  
+  @Input({required:true}) selected!:boolean;
   @Output() select=new EventEmitter<string>();
 
   get imagePath(){
