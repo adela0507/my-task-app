@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Task } from "../task/task";
 import { NewTask } from "../new-task/new-task";
 import { NewTaskData } from '../task/task.model';
+import { TaskService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -19,19 +20,15 @@ throw new Error('Method not implemented.');
   @Input ({required:true}) name!:string;
   @Input ({required:true}) userId!:string;
   isAddingTask=false;
-  tasks=[{
-    id:'t1',
-    userId:'u1',
-    title:'Task 1',
-    description:'Description of Task 1',
-    dueDate:'2025-12-31',
-  },]
+  
+  constructor(private tasks:TaskService){
+  }
 
   get selectedUserTasks(){
-    return this.tasks.filter(task=>task.userId===this.userId);
+    return this.tasks.getUserTasks(this.userId);
   }
   onCompleteTasks(id:string){
-    this.tasks=this.tasks.filter(task=>task.id!==id);
+    return
   }
 
   onStartAddTask(){
@@ -41,15 +38,6 @@ throw new Error('Method not implemented.');
   onCancelAddTask(){
     this.isAddingTask=false;
   }
-  onAddTask(taskData:NewTaskData){
-    this.tasks.unshift({
-      id:'t' + (this.tasks.length + 1),
-      userId:this.userId,
-      title:taskData.title,
-      description:taskData.summary,
-      dueDate:taskData.dueDate,
-    });
-    this.isAddingTask=false;
-  }
+ 
 
 }
